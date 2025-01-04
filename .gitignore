@@ -37,5 +37,5 @@ build/
 ### Mac OS ###
 .DS_Store
 
-/backend/src/main/resources/META-INF/import.sql
+/backend/src/main/resources/import.sql
 /frontend/node_modules
