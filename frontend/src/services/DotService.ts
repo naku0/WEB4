@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import $api from "../http";
+import $api from "../http/api";
 import {Result} from "../models/data/Result";
 
 export default class DotService {

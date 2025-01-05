@@ -8,7 +8,7 @@
     <artifactId>web4</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>web4</name>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>

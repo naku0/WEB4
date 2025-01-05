@@ -14,7 +14,7 @@ public class ResponceManager {
     static TokenCreatorManager tokenCreatorManager = new TokenCreatorManager();
     static UserRepository userRepository = new UserRepository();
 
-    public static Response login(LoginDTO ourSlonyara) {
+    public static Response response(LoginDTO ourSlonyara) {
         String username = ourSlonyara.getUsername();
         Map<String, String> tokens = tokenCreatorManager.createTokensForUser(username);
         String accessToken = tokens.get("accessToken");
@@ -25,10 +25,10 @@ public class ResponceManager {
         );
 
         Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("accessToken", accessToken);
         responseMap.put("user", new HashMap<String, Object>() {{
             put("id", userRepository.findByUsername(username).getId());
             put("username", username);
+            responseMap.put("accessToken", accessToken);
         }});
 
         return Response.ok(responseMap)

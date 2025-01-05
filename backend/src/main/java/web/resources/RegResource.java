@@ -5,7 +5,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import web.DTO.LoginDTO;
 import web.DTO.RegDTO;
+import web.managers.ResponceManager;
 import web.managers.UserRegistrationManager;
 import web.validators.RegValidator;
 
@@ -26,9 +28,7 @@ public class RegResource {
         } else{
             try {
                 userRegistrationManager.register(newSlonyara);
-                return Response.status(Response.Status.CREATED)
-                        .entity("User registered successfully")
-                        .build();
+                return ResponceManager.response(new LoginDTO(newSlonyara.getUsername()));
             } catch (Exception e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                         .entity("Failed to register user")

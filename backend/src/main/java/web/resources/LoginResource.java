@@ -19,7 +19,7 @@ public class LoginResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginDTO ourSlonyara) {
         if (loginValidator.validate(ourSlonyara)) {
-            return ResponceManager.login(ourSlonyara);
+            return ResponceManager.response(ourSlonyara);
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
