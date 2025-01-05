@@ -1,4 +1,4 @@
-package web.dataModels;
+package web.entities;
 
 import jakarta.persistence.*;
 import java.io.Serializable;

@@ -2,7 +2,7 @@ package web.resources;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import web.dataModels.LoginDTO;
+import web.DTO.LoginDTO;
 import web.managers.TokenCreatorManager;
 import web.validators.LoginValidator;
 

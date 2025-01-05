@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
-import web.dataModels.User;
+import web.entities.User;
 import web.exceptions.SaveToDataBaseException;
 
 public class UserRepository {
@@ -41,6 +41,4 @@ public class UserRepository {
         }
     }
 
-
 }
-

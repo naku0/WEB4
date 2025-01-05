@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class TokenCreatorManager {
     TokenGenerator tokenGenerator = new TokenGenerator();
-    public Response createTokensForUser(String username){
+    public void createTokensForUser(String username){
         String accessToken = tokenGenerator.generateToken(username, JwtConfig.getAccessTokenExpiration());
         String refreshToken = tokenGenerator.generateToken(username, JwtConfig.getRefreshTokenExpiration());
 
@@ -18,8 +18,6 @@ public class TokenCreatorManager {
                 "refreshToken", refreshToken, (int) (JwtConfig.getRefreshTokenExpiration() / 1000)
         );
 
-        return Response.ok(new HashMap<String, String>() {{
-            put("accessToken", accessToken);
-        }}).cookie(refreshCookie).build();
+        ResponceManager.login(accessToken, refreshCookie)
     }
 }

@@ -1,7 +1,7 @@
 package web.validators;
 
-import web.dataModels.LoginDTO;
-import web.dataModels.User;
+import web.DTO.LoginDTO;
+import web.entities.User;
 import web.repositories.UserRepository;
 import web.utils.PSWDUtil;
 

@@ -1,6 +1,6 @@
 package web.validators;
 
-import web.dataModels.RegDTO;
+import web.DTO.RegDTO;
 import web.repositories.UserRepository;
 
 public class RegValidator {

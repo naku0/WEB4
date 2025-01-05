@@ -1,7 +1,7 @@
 package web.managers;
 
-import web.dataModels.RegDTO;
-import web.dataModels.User;
+import web.DTO.RegDTO;
+import web.entities.User;
 import web.exceptions.SaveToDataBaseException;
 import web.repositories.UserRepository;
 import web.utils.PSWDUtil;

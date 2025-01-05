@@ -5,7 +5,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import web.dataModels.RegDTO;
+import web.DTO.RegDTO;
 import web.managers.UserRegistrationManager;
 import web.validators.RegValidator;
 

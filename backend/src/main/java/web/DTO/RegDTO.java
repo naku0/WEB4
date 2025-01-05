@@ -1,4 +1,4 @@
-package web.dataModels;
+package web.DTO;
 
 public class RegDTO {
     private String username;
