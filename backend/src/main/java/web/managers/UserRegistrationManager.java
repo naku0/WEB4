@@ -1,5 +1,6 @@
 package web.managers;
 
+import web.DTO.LoginDTO;
 import web.DTO.RegDTO;
 import web.entities.User;
 import web.exceptions.SaveToDataBaseException;
