@@ -1,5 +1,6 @@
 package web.resources;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.*;
@@ -11,9 +12,11 @@ import web.managers.ResponceManager;
 import web.managers.UserRegistrationManager;
 import web.validators.RegValidator;
 
+import java.util.logging.Logger;
+
 @Path("/auth")
 public class RegResource {
-
+    Logger logger = Logger.getLogger(RegResource.class.getName());
     private final RegValidator regValidator = new RegValidator();
     private final UserRegistrationManager userRegistrationManager = new UserRegistrationManager();
 
@@ -22,18 +25,23 @@ public class RegResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/register")
     public Response register(RegDTO newSlonyara) {
-
-        if (!regValidator.canBeRegistered(newSlonyara)) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } else{
-            try {
-                userRegistrationManager.register(newSlonyara);
-                return ResponceManager.response(new LoginDTO(newSlonyara.getUsername()));
-            } catch (Exception e) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity("Failed to register user")
-                        .build();
+        try {
+            if (!regValidator.canBeRegistered(newSlonyara)) {
+                logger.warning("can't register" + newSlonyara);
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            } else {
+                try {
+                    logger.fine("registering " + newSlonyara);
+                    userRegistrationManager.register(newSlonyara);
+                    return ResponceManager.response(new LoginDTO(newSlonyara.getUsername(), newSlonyara.getPassword()));
+                } catch (Exception e) {
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity("Failed to register user")
+                            .build();
+                }
             }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
         }
     }
 }

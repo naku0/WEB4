@@ -11,33 +11,39 @@ public class UserRepository {
     private final EntityManagerFactory entityManagerFactory;
     EntityManager em;
 
+    public EntityManager getEntityManager() {
+        if (em == null || !em.isOpen()) {
+            em = entityManagerFactory.createEntityManager();
+        }
+        return em;
+    }
 
     public UserRepository() {
-        this.entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("users");
         this.em = entityManagerFactory.createEntityManager();
     }
 
     public User findByUsername(String username) {
         try {
             String query = "SELECT u FROM User u WHERE u.username = :username";
-            TypedQuery<User> typedQuery = em.createQuery(query, User.class);
+            TypedQuery<User> typedQuery = getEntityManager().createQuery(query, User.class);
             typedQuery.setParameter("username", username);
             return typedQuery.getResultStream().findFirst().orElse(null);
         } finally {
-            em.close();
+            getEntityManager().close();
         }
     }
 
     public void saveUser(User user) throws SaveToDataBaseException {
         try {
-            em.getTransaction().begin();
-            em.persist(user);
-            em.getTransaction().commit();
+             getEntityManager().getTransaction().begin();
+             getEntityManager().persist(user);
+             getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+             getEntityManager().getTransaction().rollback();
             throw new SaveToDataBaseException("Failed to save user");
         } finally {
-            em.close();
+             getEntityManager().close();
         }
     }
 

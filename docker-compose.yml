@@ -26,8 +26,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DB_HOST: database
-      DB_PORT: 5432
       DB_USER: naku
       DB_PASSWORD: postgres
       DB_NAME: mydb

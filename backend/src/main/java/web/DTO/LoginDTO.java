@@ -1,10 +1,18 @@
 package web.DTO;
 
 public class LoginDTO {
-    private final String username;
+    private String username;
     private String password;
 
-    public LoginDTO(String username) {
+    public LoginDTO() {
+    }
+
+    public LoginDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -14,5 +22,9 @@ public class LoginDTO {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

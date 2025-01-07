@@ -8,9 +8,12 @@ export const loginUser =
             const response = await AuthService.login(username, password);
             const {user, accessToken} = response.data;
             localStorage.setItem("token", accessToken);
+            localStorage.setItem("userInfo", JSON.stringify(user))
             dispatch(login({user}));
-        } catch (error) {
-            console.error("Ошибка при входе:", error);
+        } catch (error:any) {
+            if (error.response.data.message){
+                throw new Error(error.response.data.message)
+            }
         }
     };
 
@@ -21,8 +24,10 @@ export const registerUser =
             const {user, accessToken} = response.data;
             localStorage.setItem("token", accessToken);
             dispatch(login({user}));
-        } catch (error) {
-            console.error("Ошибка при регистрации:", error);
+        } catch (error:any) {
+            if (error.response.data.message){
+                throw new Error(error.response.data.message)
+            }
         }
     };
 
@@ -39,13 +44,3 @@ export const logoutUser =
     };
 
 
-const validatePassword = (pswd1: string, pswd2: string): boolean => {
-    if (pswd1 === null || pswd2 === null) {
-        return false
-    } else if (pswd1 !== pswd2) {
-        return false
-    } else if (pswd1.length > 20 || pswd2.length > 20 || pswd1.length < 4 || pswd2.length < 4) {
-        return false
-    }
-    return true
-}
