@@ -1,7 +1,7 @@
 import {JSX, useState} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../redux/store";
-import {loginUser, registerUser} from "../../http/AuthActions";
+import {registerUser} from "../../http/AuthActions";
 import {useNavigate} from "react-router-dom";
 
 export const RegForm = () : JSX.Element =>{

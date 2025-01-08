@@ -1,7 +1,6 @@
 import {JSX, useState} from "react";
-import {LoginForm} from "../blocks/LoginForm";
-import {RegForm} from "../blocks/RegForm";
-import {Header} from "../blocks/Header";
+import {LoginForm} from "../smart/LoginForm";
+import {RegForm} from "../smart/RegForm";
 import "../../stylings/Form.css"
 
 export const Auth = (): JSX.Element => {

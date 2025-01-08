@@ -1,0 +1,55 @@
+.header{
+    padding: 10px 20px;
+    display: flex;
+    font-size: 1.25rem;
+}
+
+.logoutButton{
+    margin-left: auto;
+    place-content: center;
+    padding: 10px 20px;
+}
+
+.logoutButton button{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+    border: none;
+    color: var(--red);
+    font-size: 1em;
+    cursor: pointer;
+    align-content: center;
+}
+
+.logoutButton p{
+    text-decoration: underline var(--red);
+    padding-right: 5px;
+}
+
+.userCard{
+    display: flex;
+    margin: 10px 20px;
+    cursor: pointer;
+}
+
+.userCard img{
+    border-radius: 50%;
+    scale: 1;
+    height: 50px;
+    filter: drop-shadow(1px 1px 1px var(--light-grey));
+}
+
+.userCard .username{
+    padding-left: 10px;
+    place-content: center;
+}
+
+.logoutButton button:hover{
+    color: color-mix(in oklab, var(--red) 75%, var(--white));
+}
+
+.userCard:hover{
+    .username{
+        color: color-mix(in oklab, var(--black) 75%, var(--white));
+    }
+}

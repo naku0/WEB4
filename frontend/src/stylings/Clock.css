@@ -1,0 +1,25 @@
+.clock{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    align-content: center;
+    padding: 200px 0;
+}
+
+:is(.clock) h1,h3{
+    font-family: "Century Gothic", sans-serif;
+}
+
+.clock h3{
+    font-size: 2rem;
+}
+
+.clock h1{
+    font-size: 10rem;
+}
+
+.clock p{
+    font-size: 1em;
+}

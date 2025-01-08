@@ -2,7 +2,7 @@ import { JSX, useState } from "react";
 import { useDispatch } from "react-redux";
 import {loginUser} from "../../http/AuthActions";
 import {AppDispatch} from "../../redux/store";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const LoginForm = (): JSX.Element => {
     const [username, setUsername] = useState<string>("");
