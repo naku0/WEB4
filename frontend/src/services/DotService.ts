@@ -4,10 +4,10 @@ import {Result} from "../models/data/Result";
 import {ResultResponse} from "../models/responce/ResultResponse";
 
 export default class DotService {
-    static getDots(): Promise<AxiosResponse<Result[]>> {
-        return $api.get<Result[]>("/points")
+    static getDots(userId:number): Promise<AxiosResponse<Result[]>> {
+        return $api.get<Result[]>(`/points/${userId}`)
     }
     static sendDot(userId: number, x:string, y:string, r: string): Promise<AxiosResponse<ResultResponse>> {
-        return $api.post<ResultResponse>("/", {userId, x, y, r});
+        return $api.post<ResultResponse>("/dot", {userId, x, y, r});
     }
 }

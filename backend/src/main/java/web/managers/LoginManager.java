@@ -10,7 +10,7 @@ import web.utils.CookieUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResponceManager {
+public class LoginManager {
     static TokenCreatorManager tokenCreatorManager = new TokenCreatorManager();
     static UserRepository userRepository = new UserRepository();
 

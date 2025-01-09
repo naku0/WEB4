@@ -52,7 +52,6 @@
             <version>2.14.2</version>
         </dependency>
 
-
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>

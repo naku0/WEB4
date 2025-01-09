@@ -17,20 +17,17 @@ public class Result implements Serializable {
     @Column(nullable = false)
     private boolean status;
 
-    @Column(nullable = false)
-    private String currentTime;
-
-    @Column(nullable = false)
-    private double timeOfCalculating;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Result() {
     }
 
-    public Result(Dot dot, boolean status, double timeOfCalculating, String currentTime) {
+    public Result(Dot dot, boolean status, User user) {
         this.dot = dot;
         this.status = status;
-        this.currentTime = currentTime;
-        this.timeOfCalculating = timeOfCalculating;
+        this.user = user;
     }
 
     public Long getId() {
@@ -57,19 +54,11 @@ public class Result implements Serializable {
         this.status = status;
     }
 
-    public String getCurrentTime() {
-        return currentTime;
+    public User getUser () {
+        return user;
     }
 
-    public void setCurrentTime(String currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public double getTimeOfCalculating() {
-        return timeOfCalculating;
-    }
-
-    public void setTimeOfCalculating(double timeOfCalculating) {
-        this.timeOfCalculating = timeOfCalculating;
+    public void setUser (User user) {
+        this.user = user;
     }
 }

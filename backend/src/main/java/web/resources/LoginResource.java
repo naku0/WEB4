@@ -1,10 +1,9 @@
 package web.resources;
 
-import jakarta.enterprise.context.*;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import web.DTO.LoginDTO;
-import web.managers.ResponceManager;
+import web.managers.LoginManager;
 import web.validators.LoginValidator;
 
 import java.util.HashMap;
@@ -24,7 +23,7 @@ public class LoginResource {
     public Response login(LoginDTO ourSlonyara) {
         log.info(String.format("Login %s %s", ourSlonyara.getUsername(), ourSlonyara.getPassword()));
         if (loginValidator.validate(ourSlonyara)) {
-            return ResponceManager.response(ourSlonyara);
+            return LoginManager.response(ourSlonyara);
         }
         Map<String, String> message = new HashMap<>();
         message.put("message", "Проверьте правильность введеных данных");
