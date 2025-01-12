@@ -1,6 +1,7 @@
 package web.managers;
 
 import web.config.JwtConfig;
+import web.exceptions.InvalidTokenException;
 import web.utils.TokenGenerator;
 import web.validators.TokenValidator;
 
@@ -21,7 +22,7 @@ public class TokenCreatorManager {
         }};
     }
 
-    public String refreshToken(String refreshToken) throws IllegalArgumentException {
+    public String refreshToken(String refreshToken) throws IllegalArgumentException, InvalidTokenException {
         String username = tokenValidator.validateToken(refreshToken);
 
         if (username == null) {

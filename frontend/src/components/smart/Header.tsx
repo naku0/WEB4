@@ -5,10 +5,8 @@ import "../../stylings/Header.css"
 import {LogoutButton} from "./LogoutButton";
 
 export const Header = (): JSX.Element => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
-    localStorage.setItem("token", "asdfvg12wrfrf23");
-    localStorage.setItem("userInfo", JSON.stringify({username: "JohnDoe"}));
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -28,7 +26,7 @@ export const Header = (): JSX.Element => {
                     <LogoutButton/>
                 </>
             ) : (
-                <Link to="/auth">Вход</Link>
+                <Link to="/">Домой</Link>
             )}
         </div>
     );

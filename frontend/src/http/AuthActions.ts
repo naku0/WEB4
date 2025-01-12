@@ -1,6 +1,7 @@
 import {AppDispatch} from "../redux/store";
 import AuthService from "../services/AuthService";
 import {login, logout} from "../redux/slices/userSlice";
+import {useNavigate} from "react-router-dom";
 
 export const loginUser =
     (username: string, password: string) => async (dispatch: AppDispatch) => {
@@ -32,15 +33,6 @@ export const registerUser =
     };
 
 
-export const logoutUser =
-    () => async (dispatch: AppDispatch) => {
-        try {
-            await AuthService.logout();
-            localStorage.removeItem("token");
-            dispatch(logout());
-        } catch (error) {
-            console.error("Ошибка при выходе:", error);
-        }
-    };
+
 
 

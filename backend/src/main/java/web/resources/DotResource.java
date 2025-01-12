@@ -9,7 +9,7 @@ import web.entities.Dot;
 import web.entities.Result;
 import web.exceptions.IllegalParameterException;
 import web.managers.DotManager;
-
+@Path("/api")
 public class DotResource {
 
     private final DotManager manager = new DotManager();
