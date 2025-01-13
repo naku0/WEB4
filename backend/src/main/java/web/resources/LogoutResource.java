@@ -4,13 +4,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import java.util.logging.Logger;
 
-@Path("/auth")
+@Path("authentication")
 public class LogoutResource {
 
     Logger logger = Logger.getLogger(LogoutResource.class.getName());
 
     @POST
-    @Path("/logout")
+    @Path("logout")
     @Produces(MediaType.APPLICATION_JSON)
     public Response logout() {
         try {

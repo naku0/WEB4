@@ -1,34 +1,30 @@
 package web.managers;
 
-import web.config.JwtConfig;
-import web.exceptions.InvalidTokenException;
 import web.utils.TokenGenerator;
 import web.validators.TokenValidator;
-
-import java.util.HashMap;
-import java.util.Map;
+import web.config.JwtConfig;
+import web.exceptions.InvalidTokenException;
 
 public class TokenCreatorManager {
+
+    private final TokenGenerator tokenGenerator = new TokenGenerator();
     private final TokenValidator tokenValidator = new TokenValidator();
-    TokenGenerator tokenGenerator = new TokenGenerator();
 
-    public Map<String, String> createTokensForUser(String username) {
-        String accessToken = tokenGenerator.generateToken(username, JwtConfig.getAccessTokenExpiration());
-        String refreshToken = tokenGenerator.generateToken(username, JwtConfig.getRefreshTokenExpiration());
-
-        return new HashMap<>() {{
-            put("accessToken", accessToken);
-            put("refreshToken", refreshToken);
-        }};
+    public String generateAccessToken(String username) {
+        return tokenGenerator.generateToken(username, JwtConfig.getAccessTokenExpiration(), "access");
     }
 
-    public String refreshToken(String refreshToken) throws IllegalArgumentException, InvalidTokenException {
-        String username = tokenValidator.validateToken(refreshToken);
+    public String generateRefreshToken(String username) {
+        return tokenGenerator.generateToken(username, JwtConfig.getRefreshTokenExpiration(), "refresh");
+    }
 
-        if (username == null) {
-            throw new IllegalArgumentException("Invalid or expired refresh token");
+    public String refreshAccessToken(String refreshToken) throws IllegalArgumentException {
+        try {
+            String username = tokenValidator.validateToken(refreshToken, "refresh");
+
+            return generateAccessToken(username);
+        } catch (InvalidTokenException e) {
+            throw new IllegalArgumentException("Unable to refresh access token: " + e.getMessage(), e);
         }
-
-        return tokenGenerator.generateToken(username, JwtConfig.getAccessTokenExpiration());
     }
 }

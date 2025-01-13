@@ -47,7 +47,7 @@ public class JwtFilter implements ContainerRequestFilter {
     }
 
     private boolean isPublicEndpoint(String path) {
-        return path.equals("/auth/login") || path.equals("/auth/register");
+        return path.equals("/authentication/login") || path.equals("/authentication/register") || path.equals("/authentication/refresh");
     }
 
     private void abortRequest(ContainerRequestContext requestContext, String message) {

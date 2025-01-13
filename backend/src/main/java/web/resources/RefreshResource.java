@@ -6,33 +6,44 @@ import web.managers.TokenCreatorManager;
 
 import java.util.logging.Logger;
 
-@Path("/auth")
+@Path("authentication")
 public class RefreshResource {
 
     Logger logger = Logger.getLogger(RefreshResource.class.getName());
     private final TokenCreatorManager tokenCreatorManager = new TokenCreatorManager();
+
     @POST
-    @Path("/refresh")
+    @Path("refresh")
     @Produces(MediaType.APPLICATION_JSON)
     public Response refresh(@Context HttpHeaders headers) {
         try {
-            String oldToken = headers.getHeaderString(HttpHeaders.AUTHORIZATION).substring("Bearer ".length()).trim();
-
-            String newToken = tokenCreatorManager.refreshToken(oldToken);
-            if (newToken == null) {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Unable to refresh token. Please log in again.")
+            Cookie refreshCookie = headers.getCookies().get("refreshToken");
+            if (refreshCookie == null || refreshCookie.getValue().isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("{\"error\": \"Missing or invalid refresh token\"}")
+                        .type(MediaType.APPLICATION_JSON)
                         .build();
             }
 
-            logger.info("Token refreshed successfully");
+            String refreshToken = refreshCookie.getValue();
+
+            String newAccessToken = tokenCreatorManager.refreshAccessToken(refreshToken);
+
             return Response.ok()
-                    .entity(newToken)
+                    .entity("{\"accessToken\": \"" + newAccessToken + "\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        } catch (IllegalArgumentException e) {
+            logger.severe("Error refreshing access token: " + e.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"error\": \"Invalid or expired refresh token\"}")
+                    .type(MediaType.APPLICATION_JSON)
                     .build();
         } catch (Exception e) {
-            logger.severe("Error during token refresh: " + e.getMessage());
+            logger.severe("Unexpected error: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Token refresh failed")
+                    .entity("{\"error\": \"Token refresh failed\"}")
+                    .type(MediaType.APPLICATION_JSON)
                     .build();
         }
     }

@@ -13,7 +13,7 @@ import web.validators.RegValidator;
 
 import java.util.logging.Logger;
 
-@Path("/auth")
+@Path("/authentication")
 public class RegResource {
     Logger logger = Logger.getLogger(RegResource.class.getName());
     private final RegValidator regValidator = new RegValidator();
@@ -22,7 +22,7 @@ public class RegResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/register")
+    @Path("register")
     public Response register(RegDTO newSlonyara) {
         try {
             if (!regValidator.canBeRegistered(newSlonyara)) {

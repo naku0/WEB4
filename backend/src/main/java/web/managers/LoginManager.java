@@ -16,9 +16,8 @@ public class LoginManager {
 
     public static Response response(LoginDTO ourSlonyara) {
         String username = ourSlonyara.getUsername();
-        Map<String, String> tokens = tokenCreatorManager.createTokensForUser(username);
-        String accessToken = tokens.get("accessToken");
-        String refreshToken = tokens.get("refreshToken");
+        String accessToken = tokenCreatorManager.generateAccessToken(username);
+        String refreshToken = tokenCreatorManager.generateRefreshToken(username);
 
         NewCookie refreshCookie = CookieUtil.createHttpOnlyRefreshTokenCookie(
                 "refreshToken", refreshToken, (int) (JwtConfig.getRefreshTokenExpiration() / 1000)

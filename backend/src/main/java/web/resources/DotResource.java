@@ -9,13 +9,13 @@ import web.entities.Dot;
 import web.entities.Result;
 import web.exceptions.IllegalParameterException;
 import web.managers.DotManager;
-@Path("/api")
+
 public class DotResource {
 
     private final DotManager manager = new DotManager();
 
     @POST
-    @Path("/dot")
+    @Path("dot")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response processDot(DotDTO dto) {
@@ -31,4 +31,5 @@ public class DotResource {
     public Response getPoints(@PathParam("userId") long userId) {
         return manager.getDots(userId);
     }
+
 }

@@ -43,7 +43,7 @@ export const InputForm = () : JSX.Element => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <fieldset>
                 <legend>Select X:</legend>
                 {[-4, -3, -2, -1, 0, 1, 2, 3, 4].map((number) => (
@@ -91,7 +91,7 @@ export const InputForm = () : JSX.Element => {
 
             {error && <p className="error">{error}</p>}
 
-            <button type="submit">Submit</button>
+            <button type="submit" onClick={handleSubmit}>Submit</button>
         </form>
     );
 };

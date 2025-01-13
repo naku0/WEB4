@@ -5,23 +5,25 @@ import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.ext.Provider;
 
+import java.util.logging.Logger;
 
 @Provider
 public class CORSFilter implements ContainerResponseFilter {
-
-    private static final String ALLOWED_ORIGIN = "http://localhost:3000";
+    Logger logger = Logger.getLogger(CORSFilter.class.getName());
+    private static final String ALLOWED_ORIGIN = "http://localhost";
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        String origin = requestContext.getHeaderString("Origin");
+        String path = requestContext.getUriInfo().getPath();
+        logger.info("Incoming request to path: " + path);
 
-        if (ALLOWED_ORIGIN.equals(origin)) {
-            responseContext.getHeaders().add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
-            responseContext.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
-            responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
-            responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-        } else {
-            responseContext.getHeaders().add("Access-Control-Allow-Origin", "null");
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+        responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
+        responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Authorization");
+
+        if ("OPTIONS".equalsIgnoreCase(requestContext.getMethod())) {
+            responseContext.setStatus(204);
         }
     }
 }

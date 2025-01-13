@@ -1,5 +1,6 @@
 package web.resources;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import web.DTO.LoginDTO;
@@ -10,14 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-@Path("/auth")
+@Path("authentication")
 public class LoginResource {
-
     private final LoginValidator loginValidator = new LoginValidator();
     Logger log = Logger.getLogger(LoginResource.class.getName());
 
+    {
+        log.info("Received request on /authentication/");
+    }
     @POST
-    @Path("/login")
+    @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginDTO ourSlonyara) {

@@ -14,12 +14,12 @@ public class TokenGenerator {
         this.algorithm = Algorithm.HMAC256(JwtConfig.getSecretKey());
     }
 
-    public String generateToken(String username, long expirationTime) {
+    public String generateToken(String username, long expirationTime, String type) {
         return JWT.create()
                 .withSubject(username)
+                .withClaim("type", type)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                 .sign(algorithm);
     }
 }
-
