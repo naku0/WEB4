@@ -1,7 +1,6 @@
 import {AppDispatch} from "../redux/store";
 import AuthService from "../services/AuthService";
-import {login, logout} from "../redux/slices/userSlice";
-import {useNavigate} from "react-router-dom";
+import {login} from "../redux/slices/userSlice";
 
 export const loginUser =
     (username: string, password: string) => async (dispatch: AppDispatch) => {

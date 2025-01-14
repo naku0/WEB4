@@ -10,6 +10,7 @@ import web.entities.Result;
 import web.exceptions.IllegalParameterException;
 import web.managers.DotManager;
 
+@Path("api")
 public class DotResource {
 
     private final DotManager manager = new DotManager();
@@ -22,12 +23,16 @@ public class DotResource {
         try {
             return manager.checkDot(new Dot(dto.getX(), dto.getY(), dto.getR()), dto.getUserId());
         } catch (IllegalParameterException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\": \"" + e.getMessage() + "\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+
         }
     }
 
     @GET
-    @Path("/points/{userId}")
+    @Path("points/{userId}")
     public Response getPoints(@PathParam("userId") long userId) {
         return manager.getDots(userId);
     }

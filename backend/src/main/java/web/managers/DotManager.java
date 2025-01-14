@@ -10,22 +10,19 @@ import web.validators.AreaValidator;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DotManager {
     private final DotRepository dotRepository = new DotRepository();
     private final AreaValidator areaValidator = new AreaValidator();
+    Logger logger = Logger.getLogger(DotManager.class.getName());
 
     public Response checkDot(Dot dot, long userId) throws IllegalParameterException {
         boolean status = areaValidator.checkSpot(dot.getX(), dot.getY(), dot.getR());
         Result result = new Result(dot, status, null);
-
-        if (status) {
-            result.setStatus(true);
-            dotRepository.saveDot(result, userId);
-        } else {
-            result.setStatus(false);
-        }
-
+        logger.info(result.toString());
+        result.setStatus(status);
+        dotRepository.saveDot(result, userId);
         return Response.ok()
                 .entity(new HashMap<String, Object>() {{
                     put("result", new HashMap<String, Object>() {{

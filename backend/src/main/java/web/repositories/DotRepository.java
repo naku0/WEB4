@@ -35,7 +35,7 @@ public class DotRepository {
         try {
             User user = em.find(User.class, userId);
             if (user == null) {
-                throw new IllegalArgumentException("User  not found with ID: " + userId);
+                throw new IllegalArgumentException("User not found with ID: " + userId);
             }
             result.setUser (user);
             logger.info("Saving dot");

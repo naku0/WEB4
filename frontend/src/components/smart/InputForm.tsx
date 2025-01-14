@@ -1,21 +1,30 @@
 import React, {JSX, useEffect, useState} from "react";
 import {sendDot} from "../../http/DotActions";
-import {data} from "react-router-dom";
+import {Result} from "../../models/data/Result";
+import {CanvasDrawer} from "../../services/CanvasDrawer";
+
+interface InputFormProps {
+    addDots: (result: Result) => void;
+    dots: Result[];
+}
 
 
-export const InputForm = () : JSX.Element => {
+export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
     const [x, setX] = useState<number | null>(null);
     const [y, setY] = useState<string>("");
     const [r, setR] = useState<number | null>(null);
     const [error, setError] = useState<string>("");
-    const [userID, setUserId] = useState<number>(0);
+    const [userID, setUserId] = useState<number | null>(null);
+    const [canvasDrawer, setCanvasDrawer] = useState<CanvasDrawer | null>(null);
+
     useEffect(() => {
-        const userInfo = localStorage.getItem('userInfo');
+        const userInfo = localStorage.getItem("userInfo");
         if (userInfo) {
             const parsedUserInfo = JSON.parse(userInfo);
-            setUserId(parsedUserInfo.userId || 0);
+            setUserId(parsedUserInfo.id);
         }
     }, []);
+
 
     const handleXChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value, 10);
@@ -29,18 +38,40 @@ export const InputForm = () : JSX.Element => {
     const handleRChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value, 10);
         setR(value);
+        if (canvasDrawer) {
+            canvasDrawer.clearCanvas();
+            canvasDrawer.drawShapes(value);
+            canvasDrawer.redrawPoints(dots, value);
+            canvasDrawer.drawAxis();
+
+        }
     };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        if (!userID) {
+            setError("User ID not loaded yet. Please wait.");
+            return;
+        }
+
         if (x === null || r === null || y.trim() === "") {
             setError("All fields are required!");
         } else {
             setError("");
-            sendDot(userID, x.toString(),y,r.toString())
-                .then(responce => console.log(responce));
+            sendDot(userID, x.toString(), y, r.toString())
+                .then(response => {
+                    const result = response.result;
+                    addDots(result);
+                    canvasDrawer?.drawPoint(result)
+                })
+                .catch(error => {
+                    if (error.status === 400) {
+                        setError("Проблема с введеными данными. Перепроверьте их")
+                    }
+                });
         }
-    };
+    }
 
     return (
         <form>
@@ -91,7 +122,9 @@ export const InputForm = () : JSX.Element => {
 
             {error && <p className="error">{error}</p>}
 
-            <button type="submit" onClick={handleSubmit}>Submit</button>
+            <button type="submit" onClick={handleSubmit}>
+                Submit
+            </button>
         </form>
     );
-};
+}
