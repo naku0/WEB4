@@ -1,0 +1,42 @@
+main{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+}
+
+.container{
+    display: flex;
+}
+
+table{
+    width: 200px;
+}
+
+:is(tr) th,td{
+    padding: 10px;
+    text-align: center;
+}
+
+.graph{
+    width: 400px;
+    height: 400px;
+}
+
+canvas{
+    width: 100%;
+    height: 100%
+}
+
+@media (width<=375px) {
+    table{
+        width: 50px ;
+    }
+    :is(tr) th,td{
+        padding: 5px;
+    }
+    .graph{
+        width: 200px;
+    }
+}

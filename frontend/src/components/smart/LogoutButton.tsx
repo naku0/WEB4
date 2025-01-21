@@ -5,11 +5,13 @@ import AuthService from "../../services/AuthService";
 export const LogoutButton = (): JSX.Element => {
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
+    const handleLogout = async (event:React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         try {
             await AuthService.logout();
             localStorage.removeItem("token");
-            navigate("/auth");
+            localStorage.removeItem('userInfo');
+            navigate('/auth');
         } catch (error) {
             console.error("Ошибка при выходе:", error);
         }

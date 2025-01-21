@@ -81,7 +81,7 @@ export class CanvasDrawer {
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.arc(this.startX, this.startY, r*this.oneCell, 0, Math.PI * 0.5, false);
+        this.ctx.arc(this.startX, this.startY, r*this.halfCell, 0, Math.PI * 0.5, false);
         this.ctx.closePath();
         this.ctx.fill();
     }
@@ -90,7 +90,7 @@ export class CanvasDrawer {
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.rect(this.startX, this.startY, r*this.oneCell, -r*this.oneCell);
+        this.ctx.rect(this.startX, this.startY, r*this.halfCell, -r*this.oneCell);
         this.ctx.closePath();
         this.ctx.fill();
 
@@ -100,8 +100,8 @@ export class CanvasDrawer {
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.lineTo(this.startX - r*this.halfCell, this.startY);
-        this.ctx.lineTo(this.startX, this.startY + r*this.halfCell);
+        this.ctx.lineTo(this.startX - r*this.oneCell, this.startY);
+        this.ctx.lineTo(this.startX, this.startY - r*this.oneCell);
         this.ctx.closePath();
         this.ctx.fill();
     }

@@ -1,5 +1,6 @@
 package web.managers;
 
+import jakarta.ejb.EJB;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.HttpHeaders;
 import web.entities.Dot;
@@ -14,7 +15,8 @@ import java.util.logging.Logger;
 
 public class DotManager {
     private final DotRepository dotRepository = new DotRepository();
-    private final AreaValidator areaValidator = new AreaValidator();
+    @EJB
+    private AreaValidator areaValidator;
     Logger logger = Logger.getLogger(DotManager.class.getName());
 
     public Response checkDot(Dot dot, long userId) throws IllegalParameterException {

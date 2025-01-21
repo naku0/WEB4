@@ -3,7 +3,6 @@ import AuthService from "../services/AuthService";
 import {store} from "../redux/store";
 import {logout} from "../redux/slices/userSlice";
 
-
 const $api = axios.create({
     withCredentials: true,
 });
@@ -19,7 +18,6 @@ $api.interceptors.response.use(
         const originalRequest = error.config;
         console.log(error.response?.status);
         if (error.response?.status === 403) {
-
             try {
                 const refreshResponse = await AuthService.refresh();
                 console.log(refreshResponse.data);

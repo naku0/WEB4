@@ -1,9 +1,12 @@
 package web.managers;
 
+import jakarta.ejb.Stateless;
 import web.utils.TokenGenerator;
 import web.validators.TokenValidator;
 import web.config.JwtConfig;
 import web.exceptions.InvalidTokenException;
+
+@Stateless
 
 public class TokenCreatorManager {
 
@@ -21,7 +24,6 @@ public class TokenCreatorManager {
     public String refreshAccessToken(String refreshToken) throws IllegalArgumentException {
         try {
             String username = tokenValidator.validateToken(refreshToken, "refresh");
-
             return generateAccessToken(username);
         } catch (InvalidTokenException e) {
             throw new IllegalArgumentException("Unable to refresh access token: " + e.getMessage(), e);

@@ -1,5 +1,6 @@
 package web.managers;
 
+import jakarta.ejb.Stateless;
 import web.DTO.LoginDTO;
 import web.DTO.RegDTO;
 import web.entities.User;
@@ -8,6 +9,7 @@ import web.repositories.UserRepository;
 import web.utils.PSWDUtil;
 
 import java.util.logging.Logger;
+@Stateless
 
 public class UserRegistrationManager {
     User newUser;

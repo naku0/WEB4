@@ -2,20 +2,21 @@ import React, {JSX, useEffect, useState} from "react";
 import {sendDot} from "../../http/DotActions";
 import {Result} from "../../models/data/Result";
 import {CanvasDrawer} from "../../services/CanvasDrawer";
-
 interface InputFormProps {
     addDots: (result: Result) => void;
     dots: Result[];
+    radius: number;
+    setRadius: (radius: number) => void;
 }
 
 
-export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
+export const InputForm = ({ addDots, dots, radius, setRadius }: InputFormProps): JSX.Element => {
     const [x, setX] = useState<number | null>(null);
     const [y, setY] = useState<string>("");
     const [r, setR] = useState<number | null>(null);
     const [error, setError] = useState<string>("");
     const [userID, setUserId] = useState<number | null>(null);
-    const [canvasDrawer, setCanvasDrawer] = useState<CanvasDrawer | null>(null);
+    const [canvasDrawer, setCanvasDrawer] = useState<CanvasDrawer|null>(null);
 
     useEffect(() => {
         const userInfo = localStorage.getItem("userInfo");
@@ -24,6 +25,14 @@ export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
             setUserId(parsedUserInfo.id);
         }
     }, []);
+
+    useEffect(() => {
+        const canvasElement = document.querySelector('canvas') as HTMLCanvasElement;
+        if (canvasElement) {
+            const drawer = new CanvasDrawer(canvasElement);
+            setCanvasDrawer(drawer);
+        }
+    }, [canvasDrawer]);
 
 
     const handleXChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,14 +46,10 @@ export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
 
     const handleRChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value, 10);
-        setR(value);
-        if (canvasDrawer) {
-            canvasDrawer.clearCanvas();
-            canvasDrawer.drawShapes(value);
-            canvasDrawer.redrawPoints(dots, value);
-            canvasDrawer.drawAxis();
-
-        }
+        setRadius(value);
+        canvasDrawer?.clearCanvas();
+        canvasDrawer?.drawShapes(value);
+        canvasDrawer?.redrawPoints(dots, value);
     };
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -55,13 +60,14 @@ export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
             return;
         }
 
-        if (x === null || r === null || y.trim() === "") {
+        if (x === null || radius === null || y.trim() === "") {
             setError("All fields are required!");
         } else {
             setError("");
-            sendDot(userID, x.toString(), y, r.toString())
+            sendDot(userID, x.toString(), y, radius.toString())
                 .then(response => {
                     const result = response.result;
+                    sessionStorage.setItem("points", JSON.stringify(result))
                     addDots(result);
                     canvasDrawer?.drawPoint(result)
                 })
@@ -113,7 +119,7 @@ export const InputForm = ({addDots, dots}: InputFormProps): JSX.Element => {
                             id={`r-${number}`}
                             value={number}
                             onChange={handleRChange}
-                            checked={r === number}
+                            checked={radius === number}
                         />
                         {number}
                     </label>

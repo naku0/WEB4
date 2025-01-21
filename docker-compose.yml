@@ -1,4 +1,6 @@
+version: "
 
+,"
 networks:
   itmo:
 

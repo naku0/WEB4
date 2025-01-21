@@ -23,3 +23,9 @@
     display: flex;
     justify-content: center;
 }
+
+@media (width<=375px) {
+    .goPlayButton{
+        width: 300px;
+    }
+}

@@ -1,10 +1,10 @@
 package web.repositories;
 
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
-import web.entities.Dot;
 import web.entities.Result;
 import web.entities.User;
 

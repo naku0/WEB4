@@ -1,7 +1,9 @@
 package web.validators;
 
+import jakarta.ejb.Stateless;
 import web.exceptions.IllegalParameterException;
 
+@Stateless
 public class AreaValidator {
 
     public boolean checkSpot(double x, double y, double r) throws IllegalParameterException {

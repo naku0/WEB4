@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 @Path("authentication")
 public class RefreshResource {
-
     Logger logger = Logger.getLogger(RefreshResource.class.getName());
     private final TokenCreatorManager tokenCreatorManager = new TokenCreatorManager();
 

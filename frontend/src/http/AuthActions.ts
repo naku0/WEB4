@@ -10,8 +10,8 @@ export const loginUser =
             localStorage.setItem("token", accessToken);
             localStorage.setItem("userInfo", JSON.stringify(user))
             dispatch(login({user}));
-        } catch (error:any) {
-            if (error.response.data.message){
+        } catch (error: any) {
+            if (error.response.data.message) {
                 throw new Error(error.response.data.message)
             }
         }
@@ -23,9 +23,10 @@ export const registerUser =
             const response = await AuthService.register(username, password, secondPassword);
             const {user, accessToken} = response.data;
             localStorage.setItem("token", accessToken);
+            localStorage.setItem("userInfo", JSON.stringify(user));
             dispatch(login({user}));
-        } catch (error:any) {
-            if (error.response.data.message){
+        } catch (error: any) {
+            if (error.response.data.message) {
                 throw new Error(error.response.data.message)
             }
         }

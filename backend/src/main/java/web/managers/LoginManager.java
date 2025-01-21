@@ -1,5 +1,7 @@
 package web.managers;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 import web.DTO.LoginDTO;
@@ -10,8 +12,11 @@ import web.utils.CookieUtil;
 import java.util.HashMap;
 import java.util.Map;
 
+@Stateless
+
 public class LoginManager {
-    static TokenCreatorManager tokenCreatorManager = new TokenCreatorManager();
+    @EJB
+    static TokenCreatorManager tokenCreatorManager;
     static UserRepository userRepository = new UserRepository();
 
     public static Response response(LoginDTO ourSlonyara) {
